@@ -21,25 +21,13 @@ class PostRepository {
       List<Post> postList = mapList.map((e) => Post.fromJson(e)).toList();
 
       //4. 파싱된 데이터를 다시 공통 DTO로 덮어씌우기
-      // responseDTO.data = postList;
-      responseDTO.data = User.fromJson(responseDTO.data);
+      responseDTO.data = postList;
+      // responseDTO.data = User.fromJson(responseDTO.data);
 
       return responseDTO;
     } catch (e) {
       //200이 아니면 catch로 감
       return ResponseDTO(-1, "중복되는 유저명입니다", null);
-    }
-  }
-
-  Future<ResponseDTO> fetchLogin(LoginReqDTO requestDTO) async {
-    try {
-      final response = await dio.post("/login", data: requestDTO.toJson());
-      ResponseDTO responseDTO = ResponseDTO.fromJson(response.data);
-      responseDTO.data = User.fromJson(responseDTO.data);
-      return responseDTO;
-    } catch (e) {
-      //200이 아니면 catch로 감
-      return ResponseDTO(-1, "유저네임 혹은 비번이 틀렸습니다", null);
     }
   }
 }

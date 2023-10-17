@@ -11,10 +11,10 @@ class UserRepository {
       final response = await dio.post("/join", data: requestDTO.toJson());
       ResponseDTO responseDTO = ResponseDTO.fromJson(response.data);
       // responseDTO.data = User.fromJson(responseDTO.data);
-      final jwt = response.headers["Authorization"];
-      if (jwt != null) {
-        responseDTO.token = jwt.first;
-      }
+      // final jwt = response.headers["Authorization"];
+      // if (jwt != null) {
+      //   responseDTO.token = jwt.first;
+      // }
       return responseDTO;
     } catch (e) {
       //200이 아니면 catch로 감
@@ -27,6 +27,13 @@ class UserRepository {
       final response = await dio.post("/login", data: requestDTO.toJson());
       ResponseDTO responseDTO = ResponseDTO.fromJson(response.data);
       responseDTO.data = User.fromJson(responseDTO.data);
+      final jwt = response.headers["Authorization"];
+
+      // List<String>? = 정확한 타입
+      if (jwt != null) {
+        responseDTO.token = jwt.first;
+      }
+
       return responseDTO;
     } catch (e) {
       //200이 아니면 catch로 감
